@@ -1,4 +1,5 @@
-# Welcome to your Expo app 👋
+# app.runBus
+Aplicação em React-Native com widgets na tela inicial para me avisar quando está na hora de pegar o ônibus
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
