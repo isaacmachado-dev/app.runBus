@@ -28,13 +28,13 @@ export default function AppTabs() {
             <CustomTabButton label="Início" icon="home" />
           </TabTrigger>
 
-          {/* Tab: Explorar */}
-          <TabTrigger name="explore" href="/explore" asChild>
-            <CustomTabButton label="Explorar" icon="search" />
+          {/* Tab: Rotas */}
+          <TabTrigger name="Rotas" href="/rotas" asChild>
+            <CustomTabButton label="Rotas" icon="branches" />
           </TabTrigger>
 
           {/* Tab: Configurações */}
-          <TabTrigger name="settings" href="/settings" asChild>
+          <TabTrigger name="ajustes" href="/ajustes" asChild>
             <CustomTabButton label="Ajustes" icon="setting" />
           </TabTrigger>
 
@@ -54,7 +54,7 @@ function CustomTabButton({
   return (
     <Pressable
       {...props}
-      className={`flex-row items-center gap-2 px-4 py-2 rounded-full ${
+      className={`flex-row items-center gap-1 px-4 py-2 rounded-full ${
         isFocused ? 'bg-[#738A99]' : 'bg-white'
       }`}
     >

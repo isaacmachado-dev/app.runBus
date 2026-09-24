@@ -3,7 +3,7 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { Image } from 'expo-image';
 import "lucide-react-native";
-import { ArrowUpRight, BusFront, CreditCard, MapPin, Waypoints } from 'lucide-react-native';
+import { ArrowUpRight, Bus, BusFront, CreditCard, MapPin, Waypoints } from 'lucide-react-native';
 import { Text, View } from 'react-native';
 import { StatCard } from './components/StatCard';
 
@@ -118,6 +118,45 @@ export default function HomeScreen() {
           <ArrowUpRight />
 
         </View>
+
+        <View className="mt-10">
+          <Text className="text-[#555248] font-semibold text-sm mx-10 uppercase">
+            Outras opções de linhas
+          </Text>
+        </View>
+
+        <View className="mx-10 mt-4 bg-[#FFFAE0] rounded-2xl p-4 border-1 border-[#555248]">
+            <View className="flex flex-row gap-2 overflow-hidden">
+              <View className="p-2 bg-[#738A99] rounded-md">
+                <Text className="text-white">Rua MMMMMMMM</Text>
+              </View>
+              <View className="p-2 bg-white rounded-md ">
+                <Text className="text-black">Rua MMMMMMMM</Text>
+              </View>
+              <View className="p-2 bg-white rounded-md">
+                <Text className="text-black">Rua MMMMMMMM</Text>
+              </View>
+            </View>
+
+            <View className="mt-5">
+              <View className="flex flex-col gap-3 ">
+                <View className="flex flex-row space-between items-center gap-2">
+                  <Bus />
+                  <Text>Linha 8080</Text>
+                </View>
+                
+                <View className="h-[1px] w-full bg-[#555248]/20" />
+
+                <View className="flex flex-row space-between items-center gap-2">
+                  <Bus />
+                  <Text>Linha 8080</Text>
+                </View>
+              </View>
+            </View>
+
+        </View>
+
+   
 
       </View>
 
