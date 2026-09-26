@@ -1,6 +1,6 @@
+import { Canvas, Path, Skia } from '@shopify/react-native-skia';
 import React from 'react';
 import { Text, View } from 'react-native';
-import { Canvas, Path, Skia } from '@shopify/react-native-skia';
 
 interface ProgressCircleProps {
   progress: number; // 0 a 1 (ex: 0.25 para 25%)
@@ -88,7 +88,7 @@ export function StatCard({
   activeStrokeWidth = 5,
 }: StatCardProps) {
   return (
-    <View className="flex-1 border border-[#555248]/30 rounded-[24px] p-3.5 bg-white justify-between">
+    <View className="flex-1 border border-[#CCC6A3]/60 shadow-sm rounded-[24px] p-3.5 bg-white justify-between">
       {/* Top Header: Icon + Title */}
       <View className="flex-row items-center gap-1.5">
         {icon}

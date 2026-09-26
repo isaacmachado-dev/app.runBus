@@ -1,4 +1,5 @@
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { router } from 'expo-router';
 import { TabList, Tabs, TabSlot, TabTrigger, TabTriggerSlotProps } from 'expo-router/ui';
 import { Pressable, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -21,7 +22,7 @@ export default function AppTabs() {
             gap: 12,
             bottom: Math.max(insets.bottom, 16),
           }}
-          className="absolute self-center bg-[#C5DBE9] px-4 py-2.5 rounded-full border border-white/20 shadow-md"
+          className="absolute self-center bg-[#C5DBE9] px-4 py-2.5 rounded-full shadow-xl mb-1"
         >
           {/* Tab: Início */}
           <TabTrigger name="index" href="/" asChild>
@@ -34,7 +35,14 @@ export default function AppTabs() {
           </TabTrigger>
 
           {/* Tab: Configurações */}
-          <TabTrigger name="ajustes" href="/ajustes" asChild>
+          <TabTrigger 
+            name="ajustes" 
+            href="/ajustes" 
+            asChild
+            onPress={() => {
+               router.replace('/ajustes')
+            }}
+          >
             <CustomTabButton label="Ajustes" icon="setting" />
           </TabTrigger>
 
@@ -54,8 +62,8 @@ function CustomTabButton({
   return (
     <Pressable
       {...props}
-      className={`flex-row items-center gap-1 px-4 py-2 rounded-full ${
-        isFocused ? 'bg-[#738A99]' : 'bg-white'
+      className={`flex-row items-center gap-1 p-2 rounded-full ${
+        isFocused ? 'bg-[#738A99] px-4' : 'bg-white'
       }`}
     >
       <AntDesign

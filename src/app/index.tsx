@@ -1,166 +1,203 @@
+import { Header } from '@/components/Header';
 import { useTheme } from '@/hooks/use-theme';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import { Image } from 'expo-image';
-import "lucide-react-native";
-import { ArrowUpRight, Bus, BusFront, CreditCard, MapPin, Waypoints } from 'lucide-react-native';
-import { Text, View } from 'react-native';
-import { StatCard } from './components/StatCard';
+import { Link } from 'expo-router';
+import {
+  ArrowUpRight,
+  Bus,
+  BusFront,
+  CreditCard,
+  MapPin,
+  Plus,
+  Waypoints
+} from 'lucide-react-native';
+import React, { useState } from 'react';
+import { Pressable, ScrollView, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { StatCard } from '@/components/StatCard';
 
 export default function HomeScreen() {
   const theme = useTheme();
+  const insets = useSafeAreaInsets();
+  const [selectedStreet, setSelectedStreet] = useState(0);
+
+  const streets = ['Rua MM MM MM', 'Rua MM MM MM'];
+
+  const busLines = [
+    { id: '1', name: 'Linha 8080', isPinned: true },
+    { id: '2', name: 'Linha 8081', isPinned: true },
+    { id: '3', name: 'Linha 8082', isPinned: true },
+  ];
+
   return (
     <View
       style={{ backgroundColor: theme.background }}
       className="flex-1 flex flex-col items-center justify-between"
     >
-      <View className="flex flex-row items-center justify-between w-full px-4 py-2 mt-15">
-        <View className="flex flex-row items-center justify-between gap-4">
-          
-          <View className="w-12 h-12 rounded-full overflow-hidden">
-            <Image
-              source={require('../../assets/images/users/default/default.png')}
-              style={{ width: 50, height: 50 }}
-              contentFit="fill"
-              className="rounded-full"
+      {/* Header Superior Padronizado */}
+      <Header />
+
+      {/* Conteúdo Principal com Fundo Branco arredondado e rolagem */}
+      <View className="bg-white flex-1 w-full rounded-[40px] overflow-hidden">
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            paddingHorizontal: 24,
+            paddingTop: 28,
+            paddingBottom: insets.bottom + 85,
+          }}
+        >
+          {/* Card Vermelho de Alerta da Linha */}
+          <View className="bg-[#B54444] py-5 rounded-3xl">
+            <View className="bg-[#EE9090] mx-5 py-2 rounded-full flex flex-row justify-between items-center p-4 gap-4">
+              <View className="flex flex-row items-center gap-2">
+                <BusFront color="white" />
+                <Text className="text-white font-semibold">Linha 8080</Text>
+              </View>
+
+              <View className="flex-1 flex-row items-center gap-2">
+                <MapPin color="white" />
+                <Text
+                  numberOfLines={1}
+                  className="text-white font-semibold flex-1"
+                >
+                  Rua MMMMMMKKKKKKKKKKKKKKKKKKK
+                </Text>
+              </View>
+            </View>
+
+            <Text className="text-white font-bold mx-5 mt-16 text-2xl">
+              1 <Text className="font-semibold text-sm text-white/70">min</Text>
+            </Text>
+            <Text className="text-white font-bold mx-5 text-3xl">
+              SAIA AGORA!
+            </Text>
+          </View>
+
+          {/* Cards de Métricas (Caminhada & Destino) */}
+          <View className="flex-row gap-3 w-full mt-4">
+            <StatCard
+              icon={<FontAwesome5 name="walking" size={16} color="#191812" />}
+              title="Caminhada"
+              time={4}
+              unit="min"
+              distance="1 km"
+              progress={0.25}
+              chartSize={46}
+              trackStrokeWidth={1.5}
+              activeStrokeWidth={5}
+            />
+            <StatCard
+              icon={<MapPin size={16} color="#191812" />}
+              title="Destino"
+              time={50}
+              unit="min"
+              distance="10 km"
+              progress={0.92}
+              chartSize={46}
+              trackStrokeWidth={1.5}
+              activeStrokeWidth={5}
             />
           </View>
-          
-          <Text>
-            Isaac
-          </Text>
 
-        </View>
+          {/* Botão Configurar jornada */}
+          <Link href="/rotas" asChild>
+            <Pressable className="bg-[#FFFAE0] rounded-[18px] py-3.5 px-4 mt-4 flex-row items-center justify-start gap-3 border border-[#CCC6A3]/60 shadow-sm">
+              <View className="w-7 h-7 rounded-full bg-[#E5DEB8] items-center justify-center">
+                <Waypoints size={16} color="#191812" />
+              </View>
+              <Text className="text-[#191812] font-bold text-xs">
+                Configurar jornada
+              </Text>
+            </Pressable>
+          </Link>
 
-        <View className="bg-[#CCC6A3] px-4 py-2 rounded-full flex flex-row items-center gap-2">
-          
-          {/* Icon guarda-chuva */}
-          <FontAwesome6 name="umbrella" size={24} color="white" />
-
-          <Text className="text-white">
-            21°
-          </Text>
-          
-        </View>
-      </View>
-
-      // Fundo brancao
-      <View className="bg-white h-full w-full rounded-[40px]">
-        <View className="bg-[#B54444] py-5 mt-10 mx-10 rounded-3xl">
-          <View className="bg-[#EE9090] mx-5 py-2 rounded-full flex flex-row justify-between items-center p-4 gap-4">
-            
-            <View className="flex flex-row items-center gap-2">
-              <BusFront color="white" />
-              <Text className="text-white semibold">Linha 8080</Text>
+          {/* Botão Recarregar bilhete */}
+          <Pressable className="bg-[#FFFAE0] rounded-[18px] py-3.5 px-4 mt-4 flex-row items-center justify-between gap-3 border border-[#CCC6A3]/60 shadow-sm">
+            <View className="w-7 h-7 rounded-full bg-[#E5DEB8] items-center justify-center">
+              <CreditCard size={16} color="#191812" />
             </View>
+            <Text className="text-[#191812] font-bold text-xs mr-auto">
+              Recarregar bilhete
+            </Text>
+            <ArrowUpRight size={18} color="#191812" />
+          </Pressable>
 
-            <View className="flex-1 flex-row items-center gap-2">
-              <MapPin color="white" />
-              <Text
-                numberOfLines={1}
-                className="text-white semibold flex-1"
-              >Rua MMMMMMKKKKKKKKKKKKKKKKKKK</Text>
-            </View>
-
-          </View>
-          
-          <Text className="text-white font-bold mx-5 mt-20 text-2xl">1 <Text className="font-semibold text-sm text-white/70">min</Text></Text>
-          <Text className="text-white font-bold mx-5 text-3xl">SAIA AGORA!</Text>
-
-        </View>
-
-        {/* Cards de Métricas (Caminhada & Destino) */}
-        <View className="flex-row gap-3 px-8 w-full mt-4">
-          {/* Caminhada: progresso ativo (bege) bem mais grosso e visível, anel preto fino */}
-          <StatCard
-            icon={<FontAwesome5 name="walking" size={16} color="#191812" />}
-            title="Caminhada"
-            time={4}
-            unit="min"
-            distance="1 km"
-            progress={0.25}
-            chartSize={46}
-            trackStrokeWidth={1.5}  // anel preto fino/discreto
-            activeStrokeWidth={5}   // arco bege bem mais grosso
-          />
-          {/* Destino: anel preto fino e quase todo percorrido */}
-          <StatCard
-            icon={<MapPin size={16} color="#191812" />}
-            title="Destino"
-            time={50}
-            unit="min"
-            distance="10 km"
-            progress={0.92}
-            chartSize={46}
-            trackStrokeWidth={1.5}
-            activeStrokeWidth={5}
-          />
-        </View>
-
-        <View className="flex flex-row items-center gap-2 mt-10 bg-[#FFFAE0] mx-10 py-4 px-2 rounded-2xl">
-          
-          <Waypoints/>
-          
-          <Text className="text-[#191812] font-semibold text-sm items-start">
-            Configurar jornada
-          </Text>
-
-        </View>
-
-        <View className="flex flex-row items-center gap-2 mt-4 bg-[#FFFAE0] mx-10 py-4 px-2 rounded-2xl justify-between">
-          
-          <CreditCard/>
-          
-          <Text className="text-[#191812] font-semibold text-sm mr-auto">
-            Recarregar bilhete
-          </Text>
-
-          <ArrowUpRight />
-
-        </View>
-
-        <View className="mt-10">
-          <Text className="text-[#555248] font-semibold text-sm mx-10 uppercase">
+          {/* Seção Outras opções de linhas */}
+          <Text className="text-[#555248] font-bold text-xs tracking-wider uppercase mt-8 mb-3 px-1">
             Outras opções de linhas
           </Text>
-        </View>
 
-        <View className="mx-10 mt-4 bg-[#FFFAE0] rounded-2xl p-4 border-1 border-[#555248]">
-            <View className="flex flex-row gap-2 overflow-hidden">
-              <View className="p-2 bg-[#738A99] rounded-md">
-                <Text className="text-white">Rua MMMMMMMM</Text>
-              </View>
-              <View className="p-2 bg-white rounded-md ">
-                <Text className="text-black">Rua MMMMMMMM</Text>
-              </View>
-              <View className="p-2 bg-white rounded-md">
-                <Text className="text-black">Rua MMMMMMMM</Text>
-              </View>
+          {/* Card Principal Bege Claro de Configuração de Linhas */}
+          <View className="bg-[#FFFAE0] rounded-[24px] border border-[#CCC6A3]/60 p-4 shadow-sm mb-6">
+            {/* Abas / Filtro de Ruas */}
+            <View className="flex-row items-center gap-2">
+              {streets.map((street, index) => {
+                const isActive = selectedStreet === index;
+                return (
+                  <Pressable
+                    key={index}
+                    onPress={() => setSelectedStreet(index)}
+                    className={`px-3 py-1.5 rounded-lg border ${
+                      isActive
+                        ? 'bg-[#738A99] border-[#738A99]'
+                        : 'bg-white border-white'
+                    }`}
+                  >
+                    <Text
+                      className={`text-xs ${
+                        isActive
+                          ? 'text-white font-semibold'
+                          : 'text-[#191812] font-normal'
+                      }`}
+                    >
+                      {street}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+
+              {/* Botão de Adicionar Rua (+) */}
+              <Pressable className="w-8 h-7 bg-white rounded-lg items-center justify-center border border-white">
+                <Plus size={14} color="#738A99" />
+              </Pressable>
             </View>
 
-            <View className="mt-5">
-              <View className="flex flex-col gap-3 ">
-                <View className="flex flex-row space-between items-center gap-2">
-                  <Bus />
-                  <Text>Linha 8080</Text>
-                </View>
-                
-                <View className="h-[1px] w-full bg-[#555248]/20" />
+            {/* Lista de Linhas */}
+            <View className="bg-[#FFFAE0] rounded-2xl mt-4 pt-1">
+              {busLines.map((line, index) => (
+                <React.Fragment key={line.id}>
+                  <View className="flex-row items-center justify-between py-2.5">
+                    <View className="flex-row items-center gap-3">
+                      <View className="w-8 h-8 rounded-full bg-[#E5DEB8] items-center justify-center">
+                        <Bus size={18} color="#191812" />
+                      </View>
+                      <Text className="text-[#191812] font-semibold text-xs">
+                        {line.name}
+                      </Text>
+                    </View>
 
-                <View className="flex flex-row space-between items-center gap-2">
-                  <Bus />
-                  <Text>Linha 8080</Text>
-                </View>
-              </View>
+                    <Pressable hitSlop={8}>
+                      <Text>
+                        2 min
+                      </Text>
+                    </Pressable>
+                  </View>
+
+                  {index < busLines.length - 1 && (
+                    <View className="h-[1px] bg-[#E5DEB8] my-1" />
+                  )}
+                </React.Fragment>
+              ))}
             </View>
 
-        </View>
-
-   
-
+            {/* Contador / Indicador de linhas */}
+            <View className="items-end mt-2">
+              <Text className="text-[#CCC6A3] font-bold text-xs">4/5</Text>
+            </View>
+          </View>
+        </ScrollView>
       </View>
-
     </View>
   );
 }
-
