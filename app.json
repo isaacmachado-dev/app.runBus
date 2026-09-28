@@ -8,7 +8,8 @@
     "scheme": "runbus",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/runbus.icon"
+      "icon": "./assets/runbus.icon",
+      "bundleIdentifier": "com.anonymous.runBus"
     },
     "android": {
       "adaptiveIcon": {

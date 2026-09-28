@@ -1,6 +1,5 @@
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { Image, ImageSource } from 'expo-image';
-import React from 'react';
 import { Text, View } from 'react-native';
 
 export interface HeaderProps {
@@ -13,7 +12,7 @@ export interface HeaderProps {
 
 export function Header({
   userName = 'Isaac',
-  avatarSource = require('@/assets/images/users/default/default.png'),
+  avatarSource = require('@/assets/images/users/default/default.jpg'),
   temperature = '21°',
   weatherIcon = 'umbrella',
   className = '',
