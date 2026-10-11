@@ -1,41 +1,85 @@
 # app.runBus
-> Aplicação em React-Native com widgets na tela inicial para me avisar quando está na hora de pegar o ônibus
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+> **runBus** é um aplicativo móvel em React Native (Expo SDK 57) projetado para você nunca perder o ônibus, calculando a margem exata entre a aproximação da linha e o seu tempo de caminhada até a parada.
 
-## Get started
+---
 
-1. Install dependencies
+## 🚀 Início Rápido
 
+### Pré-requisitos
+* **Node.js** >= 18
+* **Ruby on Rails** (com o backend da API rodando localmente)
+* **Expo CLI** / **Expo Go** no celular físico ou emulador Android/iOS
+
+### 1. Instalar dependências
+```bash
+npm install
+```
+
+### 2. Iniciar o servidor de desenvolvimento
+```bash
+npx expo start
+```
+
+* Para rodar no Android: pressione `a` no terminal ou `npm run android`
+* Para rodar no iOS: pressione `i` no terminal ou `npm run ios`
+* Para rodar no navegador: pressione `w` ou `npm run web`
+
+---
+
+## 🌐 Conectando com a API Rails Local
+
+Para que o aplicativo no celular ou emulador consuma sua API Rails local:
+
+1. **Inicie o Rails escutando em todas as interfaces de rede (`0.0.0.0`)**:
    ```bash
-   npm install
+   bin/rails s -b 0.0.0.0 -p 3000
    ```
-
-2. Start the app
-
+2. **Caso depure via USB no Android**:
    ```bash
-   npx expo start
+   adb reverse tcp:3000 tcp:3000
    ```
+3. O app está configurado em [`src/components/Header.tsx`](file:///home/moonlight/New_Projects/apps/runBus/src/components/Header.tsx) para resolver a rota da API automaticamente de acordo com a plataforma (`Android`, `iOS` ou `Web`).
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🌦️ Endpoints Consumidos
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Clima em Tempo Real: `GET /api/v1/weather`
+* **Parâmetros de Query:** `lat` (latitude) e `long` (longitude)
+* **Exemplo:**
+  ```bash
+  curl -s "http://127.0.0.1:3000/api/v1/weather?lat=-23.5505&long=-46.6333"
+  ```
+* **Campos principais retornados:**
+  * `current.temperature`: Temperatura em graus Celsius.
+  * `current.condition`: Condição climática atual (ex: *"Garoa densa"*).
+  * `track_impact.extra_walking_minutes`: Minutos adicionais estimados de caminhada causados por chuva.
 
-## Learn more
+---
 
-To learn more about developing your project with Expo, look at the following resources:
+## 📁 Estrutura do Projeto
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```text
+src/
+├── app/                    # File-based routing com Expo Router
+│   ├── _layout.tsx         # Configuração de temas e Safe Area
+│   ├── index.tsx           # Tela inicial (Dashboard principal)
+│   ├── rotas/              # Rastreamento de rotas e linhas
+│   └── ajustes/            # Preferências e configurações do app
+├── components/             # Componentes modulares
+│   ├── Header.tsx          # Header com avatar, nome e clima dinâmico
+│   ├── StatCard.tsx        # Métricas de margem de saída
+│   └── ui/                 # Componentes genéricos de UI
+└── constants/              # Temas e cores
+```
 
-## Join the community
+---
 
-Join our community of developers creating universal apps.
+## 🛠️ Stack Tecnológica
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+* **Front-end:** [Expo SDK 57](https://docs.expo.dev/versions/v57.0.0/), React Native 0.86, React 19, TypeScript
+* **Estilização:** Tailwind CSS v4 / NativeWind
+* **Gráficos & Animações:** Victory Native XL, Skia, Reanimated
+* **Ícones:** FontAwesome6 (`@expo/vector-icons`), Lucide React Native
+* **Back-end:** Ruby on Rails (API Mode) + PostgreSQL

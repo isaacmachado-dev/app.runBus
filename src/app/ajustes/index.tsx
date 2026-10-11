@@ -181,6 +181,7 @@ export default function AjustesScreen() {
               />
             </View>
           </View>
+          
 
           {/* Seção 2: Sobre */}
           <Text className="text-[#555248] font-bold text-xs tracking-wider uppercase mt-8 mb-3 px-1">
